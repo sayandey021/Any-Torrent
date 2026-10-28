@@ -2,7 +2,7 @@
 
 ![SwiftSeed Logo](src/assets/icon.ico)
 
-# 🌱 SwiftSeed.
+# 🌱 Any Torrent.
 
 ### A Modern, Fast & Lightweight Torrent Search and Download Client
 
