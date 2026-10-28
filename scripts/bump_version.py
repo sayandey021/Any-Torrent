@@ -55,16 +55,16 @@ def bump_version(new_version):
         {
             "file": "scripts/build_exe.py",
             "replacements": [
-                (r"elif 'productversion' in name or name == 'uctversion':\s+k.val = '[\d\.]+'", f"elif 'productversion' in name or name == 'uctversion':\n                    k.val = '{v_full}'"),
-                (r"elif 'fileversion' in name:\s+k.val = '[\d\.]+'", f"elif 'fileversion' in name:\n                    k.val = '{v_full}'")
+                (r'"--set-file-version", "[\d\.]+"', f'"--set-file-version", "{v_full}"'),
+                (r'"--set-product-version", "[\d\.]+"', f'"--set-product-version", "{v_full}"')
             ]
         },
         # 6. scripts/brand_dev_flet.py
         {
             "file": "scripts/brand_dev_flet.py",
             "replacements": [
-                (r"elif 'productversion' in name or name == 'uctversion':\s+print\(f\"  {k.name}: '{k.val}' -> '[\d\.]+'\"\)\s+k.val = '[\d\.]+'", f"elif 'productversion' in name or name == 'uctversion':\n                print(f\"  {{k.name}}: '{{k.val}}' -> '{v_full}'\")\n                k.val = '{v_full}'"),
-                (r"elif 'fileversion' in name:\s+print\(f\"  {k.name}: '{k.val}' -> '[\d\.]+'\"\)\s+k.val = '[\d\.]+'", f"elif 'fileversion' in name:\n                print(f\"  {{k.name}}: '{{k.val}}' -> '{v_full}'\")\n                k.val = '{v_full}'")
+                (r'"--set-file-version", "[\d\.]+"', f'"--set-file-version", "{v_full}"'),
+                (r'"--set-product-version", "[\d\.]+"', f'"--set-product-version", "{v_full}"')
             ]
         },
         # 7. store assets/AppxManifest_TEMPLATE.xml

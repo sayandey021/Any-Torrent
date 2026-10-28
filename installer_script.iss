@@ -1,15 +1,15 @@
-; SwiftSeed Installer Script for Inno Setup
+; Any Torrent Installer Script for Inno Setup
 ; This creates a professional Windows installer
 
-#define MyAppName "SwiftSeed"
-#define MyAppVersion "2.3.1"
-#define MyAppPublisher "SwiftSeed Team"
+#define MyAppName "Any Torrent"
+#define MyAppVersion "2.3.2"
+#define MyAppPublisher "Any Torrent Team"
 #define MyAppURL "https://github.com/sayandey021/SwiftSeed"
-#define MyAppExeName "SwiftSeed.exe"
+#define MyAppExeName "AnyTorrent.exe"
 
 [Setup]
 ; App Information
-AppId={{SwiftSeed-B7E5-4F2A-9D1C-8A3E4B6F9C2D}
+AppId={{AnyTorrent-B7E5-4F2A-9D1C-8A3E4B6F9C2D}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 AppPublisher={#MyAppPublisher}
@@ -24,7 +24,7 @@ DisableProgramGroupPage=yes
 
 ; Output Configuration
 OutputDir=installer
-OutputBaseFilename=SwiftSeed_Setup_{#MyAppVersion}
+OutputBaseFilename=AnyTorrent_Setup_{#MyAppVersion}
 Compression=lzma2/max
 SolidCompression=yes
 
@@ -32,9 +32,9 @@ SolidCompression=yes
 WizardStyle=modern
 SetupIconFile=src\assets\icon.ico
 UninstallDisplayIcon={app}\{#MyAppExeName}
-VersionInfoDescription=SwiftSeed Torrent Client Installer
-VersionInfoProductName=SwiftSeed
-VersionInfoCompany=SwiftSeed Team
+VersionInfoDescription=Any Torrent Desktop Client Installer
+VersionInfoProductName=Any Torrent
+VersionInfoCompany=Any Torrent Team
 VersionInfoVersion={#MyAppVersion}
 
 ; Privileges
@@ -54,8 +54,8 @@ Name: "startmenuicon"; Description: "Create Start Menu shortcut"; GroupDescripti
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 6.1; Check: not IsAdminInstallMode
 
 [Files]
-; Include the entire SwiftSeed folder from dist
-Source: "dist\SwiftSeed\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+; Include the entire AnyTorrent folder from dist
+Source: "dist\AnyTorrent\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
@@ -65,10 +65,10 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: de
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: quicklaunchicon
 
 [Registry]
-Root: HKA; Subkey: "Software\Classes\.torrent"; ValueType: string; ValueName: ""; ValueData: "SwiftSeed.Torrent"; Flags: uninsdeletevalue
-Root: HKA; Subkey: "Software\Classes\SwiftSeed.Torrent"; ValueType: string; ValueName: ""; ValueData: "Torrent File"; Flags: uninsdeletekey
-Root: HKA; Subkey: "Software\Classes\SwiftSeed.Torrent\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\_internal\assets\file.ico,0"; Flags: uninsdeletevalue
-Root: HKA; Subkey: "Software\Classes\SwiftSeed.Torrent\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" ""%1"""; Flags: uninsdeletevalue
+Root: HKA; Subkey: "Software\Classes\.torrent"; ValueType: string; ValueName: ""; ValueData: "AnyTorrent.Torrent"; Flags: uninsdeletevalue
+Root: HKA; Subkey: "Software\Classes\AnyTorrent.Torrent"; ValueType: string; ValueName: ""; ValueData: "Torrent File"; Flags: uninsdeletekey
+Root: HKA; Subkey: "Software\Classes\AnyTorrent.Torrent\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\_internal\assets\file.ico,0"; Flags: uninsdeletevalue
+Root: HKA; Subkey: "Software\Classes\AnyTorrent.Torrent\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" ""%1"""; Flags: uninsdeletevalue
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
@@ -97,14 +97,14 @@ begin
   Result := True;
   AppProcessName := '{#MyAppExeName}';
   
-  // Use tasklist to check if SwiftSeed is running
+  // Use tasklist to check if Any Torrent is running
   Exec('cmd.exe', '/c tasklist /FI "IMAGENAME eq ' + AppProcessName + '" 2>NUL | find /I /N "' + AppProcessName + '">NUL', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
   
   // If ResultCode = 0, the process was found (running)
   if ResultCode = 0 then
   begin
-    if MsgBox('SwiftSeed is currently running. It must be closed to continue uninstallation.' + #13#10#13#10 + 
-              'Click Yes to automatically close SwiftSeed and continue.' + #13#10 +
+    if MsgBox('Any Torrent is currently running. It must be closed to continue uninstallation.' + #13#10#13#10 + 
+              'Click Yes to automatically close Any Torrent and continue.' + #13#10 +
               'Click No to cancel the uninstallation.', mbConfirmation, MB_YESNO) = IDYES then
     begin
       // Force close the app using taskkill
@@ -119,7 +119,7 @@ begin
       if ResultCode = 0 then
       begin
         // Still running after taskkill - force retry
-        MsgBox('Failed to close SwiftSeed automatically. Please close it manually and try again.', mbError, MB_OK);
+        MsgBox('Failed to close Any Torrent automatically. Please close it manually and try again.', mbError, MB_OK);
         Result := False;
       end
       else

@@ -16,10 +16,13 @@ class DownloadStatus(Enum):
 class DownloadManager:
     def __init__(self, settings_manager):
         self.settings_manager = settings_manager
-        self.base_path = self.settings_manager.get('download_folder', os.path.join(os.path.expanduser("~"), "Downloads", "SwiftSeed Download"))
+        default_dl = os.path.join(os.path.expanduser("~"), "Downloads", "Any Torrent Download")
+        legacy_dl = os.path.join(os.path.expanduser("~"), "Downloads", "SwiftSeed Download")
+        initial_dl = legacy_dl if (os.path.exists(legacy_dl) and not os.path.exists(default_dl)) else default_dl
+        self.base_path = self.settings_manager.get('download_folder', initial_dl)
         
         # Use system temp directory for metadata fetching to avoid cluttering Downloads
-        system_temp = os.path.join(tempfile.gettempdir(), "SwiftSeed")
+        system_temp = os.path.join(tempfile.gettempdir(), "AnyTorrent")
         self.temp_path = self.settings_manager.get('temp_folder', system_temp)
         
         # Create directories if they don't exist

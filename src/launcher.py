@@ -1,5 +1,5 @@
 """
-SwiftSeed Launcher
+Any Torrent Launcher
 This launcher sets the Windows App User Model ID before starting the main application.
 This ensures proper taskbar branding and single instance behavior.
 """
@@ -27,7 +27,7 @@ def main():
         if not is_msix:
             try:
                 import ctypes
-                app_id = 'SayanDey.SwiftSeed.TorrentClient.v5'
+                app_id = 'SayanDey.AnyTorrent.TorrentClient.v5'
                 ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(app_id)
                 print(f"[Pre-Init] Windows App User Model ID set to: {app_id}")
             except Exception as e:
@@ -49,7 +49,7 @@ def main():
     # Check for single instance
     from managers.single_instance_manager import SingleInstanceManager
     
-    instance_manager = SingleInstanceManager("SwiftSeed", 48213)
+    instance_manager = SingleInstanceManager("AnyTorrent", 48213)
     
     # Check if we're the primary instance
     is_primary = instance_manager.check_and_acquire()
@@ -96,7 +96,7 @@ def main():
     # Update the callback
     instance_manager.check_and_acquire(on_message_callback=handle_instance_message)
     
-    # Force the frozen app to use its own bundled flet.exe (with SwiftSeed
+    # Force the frozen app to use its own bundled flet.exe (with Any Torrent
     # branding) instead of the shared ~/.flet/client/ cache which has
     # default Flet branding.  Only affects this process.
     if getattr(sys, 'frozen', False):
@@ -110,7 +110,7 @@ def main():
         ft.run(
             target=app_main.main, 
             assets_dir="assets",
-            name="SwiftSeed",
+            name="AnyTorrent",
             view=ft.AppView.FLET_APP
         )
     finally:

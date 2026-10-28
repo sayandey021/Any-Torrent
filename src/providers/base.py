@@ -39,7 +39,11 @@ def get_proxy_settings():
     """Load proxy settings from settings.json."""
     try:
         # Try to find settings.json in user data or current directory
+        local_appdata = os.environ.get('LOCALAPPDATA', os.path.expanduser("~"))
         settings_paths = [
+            os.path.join(local_appdata, "AnyTorrent", "settings.json"),
+            os.path.join(os.path.expanduser("~"), ".anytorrent", "settings.json"),
+            os.path.join(local_appdata, "SwiftSeed", "settings.json"),
             os.path.join(os.path.expanduser("~"), ".swiftseed", "settings.json"),
             os.path.join(os.path.dirname(__file__), "..", "settings.json"),
             "settings.json"

@@ -108,7 +108,8 @@ if __name__ == '__main__':
     target = sys.argv[1] if len(sys.argv) > 1 else None
     if not target:
         # Default: check libtorrent
-        target = os.path.join(os.path.dirname(__file__), '..', 'dist', 'SwiftSeed', '_internal', 'libtorrent', '__init__.cp313-win_amd64.pyd')
+        app_folder = 'AnyTorrent' if os.path.exists(os.path.join(os.path.dirname(__file__), '..', 'dist', 'AnyTorrent')) else 'SwiftSeed'
+        target = os.path.join(os.path.dirname(__file__), '..', 'dist', app_folder, '_internal', 'libtorrent', '__init__.cp313-win_amd64.pyd')
     
     target = os.path.abspath(target)
     print(f"Checking: {target}")

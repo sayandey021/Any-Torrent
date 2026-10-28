@@ -111,14 +111,49 @@ class DownloadsView(ft.Container):
             traceback.print_exc()
 
     def _show_add_magnet_dialog(self):
-        magnet_input = ft.TextField(label="Magnet Link", expand=True, autofocus=True)
+        def _get_clipboard_text():
+            try:
+                import win32clipboard, win32con
+                win32clipboard.OpenClipboard()
+                try:
+                    if win32clipboard.IsClipboardFormatAvailable(win32con.CF_UNICODETEXT):
+                        return win32clipboard.GetClipboardData(win32con.CF_UNICODETEXT) or ""
+                finally:
+                    win32clipboard.CloseClipboard()
+            except Exception:
+                pass
+            return ""
+
+        initial_val = ""
+        cb_text = _get_clipboard_text().strip()
+        if cb_text.startswith("magnet:"):
+            initial_val = cb_text
+
+        def paste_from_clipboard(e):
+            text = _get_clipboard_text().strip()
+            if text:
+                magnet_input.value = text
+                magnet_input.update()
+
+        magnet_input = ft.TextField(
+            label="Magnet Link",
+            value=initial_val,
+            expand=True,
+            autofocus=True,
+            suffix=ft.IconButton(
+                icon=ft.Icons.PASTE,
+                tooltip="Paste from Clipboard",
+                icon_size=20,
+                on_click=paste_from_clipboard
+            )
+        )
         
         def close_dlg(e):
             dlg.open = False
             self._page.update()
 
         def add_magnet(e):
-            magnet = magnet_input.value.strip()
+            magnet = (magnet_input.value or "").strip()
             
             # Validate magnet link
             if not magnet:
@@ -1003,7 +1038,16 @@ class DownloadsView(ft.Container):
         return False
     
     def handle_magnet_from_external(self, magnet_link):
-        """Handle magnet link from external source (command line, browser protocol)"""
+        """Handle magnet link from external source (command line, browser protocol, or search bar)"""
+        magnet_link = (magnet_link or "").strip()
+        if not magnet_link:
+            return
+
+        if not magnet_link.lower().startswith("magnet:"):
+            import re
+            if re.fullmatch(r'[0-9a-fA-F]{40}', magnet_link) or re.fullmatch(r'[2-7a-zA-Z]{32}', magnet_link):
+                magnet_link = f"magnet:?xt=urn:btih:{magnet_link}"
+
         # Create a dummy torrent object (same as in _show_add_magnet_dialog)
         class MagnetTorrent:
             def __init__(self, link):

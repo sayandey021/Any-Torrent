@@ -16,11 +16,13 @@ class DownloadDialog(ft.AlertDialog):
         
         # Custom download path for this specific download
         # Initialize with default path from settings
+        default_dl = os.path.join(os.path.expanduser("~"), "Downloads", "Any Torrent Download")
+        legacy_dl = os.path.join(os.path.expanduser("~"), "Downloads", "SwiftSeed Download")
+        initial_dl = legacy_dl if (os.path.exists(legacy_dl) and not os.path.exists(default_dl)) else default_dl
         try:
-            self.custom_download_path = download_manager.settings_manager.get('download_folder', 
-                os.path.join(os.path.expanduser("~"), "Downloads", "SwiftSeed Download"))
+            self.custom_download_path = download_manager.settings_manager.get('download_folder', initial_dl)
         except:
-            self.custom_download_path = os.path.join(os.path.expanduser("~"), "Downloads", "SwiftSeed Download")
+            self.custom_download_path = initial_dl
         
         # Use provided files or simulate
         print(f"DEBUG [DownloadDialog.__init__]: files parameter: {files}")
@@ -736,9 +738,12 @@ class DownloadDialog(ft.AlertDialog):
                 # Fallback to standard Downloads folder
                 downloads_path = os.path.join(os.path.expanduser('~'), 'Downloads')
                 
-                # Check for "SwiftSeed Download" default
+                # Check for "Any Torrent Download" or legacy "SwiftSeed Download" default
+                anytorrent_path = os.path.join(downloads_path, 'Any Torrent Download')
                 swiftseed_path = os.path.join(downloads_path, 'SwiftSeed Download')
-                if os.path.exists(swiftseed_path):
+                if os.path.exists(anytorrent_path):
+                    downloads_path = anytorrent_path
+                elif os.path.exists(swiftseed_path):
                     downloads_path = swiftseed_path
             
             if not os.path.exists(downloads_path):

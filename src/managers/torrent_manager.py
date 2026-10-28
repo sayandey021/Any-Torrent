@@ -283,7 +283,7 @@ except ImportError as e:
                 print(f"Diagnostic log written to: {_log_path}")
             except Exception:
                 try:
-                    _app_data = os.path.join(os.environ.get('LOCALAPPDATA', os.path.expanduser('~')), 'SwiftSeed')
+                    _app_data = os.path.join(os.environ.get('LOCALAPPDATA', os.path.expanduser('~')), 'AnyTorrent')
                     os.makedirs(_app_data, exist_ok=True)
                     _log_path = os.path.join(_app_data, 'dll_error_log.txt')
                     with open(_log_path, 'w') as _lf:
@@ -587,16 +587,20 @@ class TorrentManager:
         self.lock = threading.RLock()
         
         # Paths - use private variables
-        # Use LOCALAPPDATA for all writable data (required for MSIX/Store apps)
-        # MSIX apps install to read-only C:\Program Files\WindowsApps\
-        app_data_dir = os.path.join(os.environ.get('LOCALAPPDATA', os.path.expanduser("~")), "SwiftSeed")
+        local_app_data = os.environ.get('LOCALAPPDATA', os.path.expanduser("~"))
+        app_data_dir = os.path.join(local_app_data, "AnyTorrent")
+        legacy_dir = os.path.join(local_app_data, "SwiftSeed")
+        if not os.path.exists(app_data_dir) and os.path.exists(legacy_dir):
+            app_data_dir = legacy_dir
         
-        self._download_path = self.settings_manager.get('download_folder', 
-            os.path.join(os.path.expanduser("~"), "Downloads", "SwiftSeed Download"))
+        default_dl = os.path.join(os.path.expanduser("~"), "Downloads", "Any Torrent Download")
+        legacy_dl = os.path.join(os.path.expanduser("~"), "Downloads", "SwiftSeed Download")
+        initial_dl = legacy_dl if (os.path.exists(legacy_dl) and not os.path.exists(default_dl)) else default_dl
+        self._download_path = self.settings_manager.get('download_folder', initial_dl)
             
         # Temp and State paths in user's app data directory (not app root - it's read-only for MSIX)
         self._temp_path = self.settings_manager.get('temp_folder', 
-            os.path.join(tempfile.gettempdir(), "SwiftSeed Download"))
+            os.path.join(tempfile.gettempdir(), "Any Torrent Download"))
         self.state_path = os.path.join(app_data_dir, ".torrent_state")
         
         # Create directories

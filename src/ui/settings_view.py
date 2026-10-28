@@ -110,7 +110,7 @@ class SettingsView(ft.Container):
             
         import winreg
         key_path = r"Software\Microsoft\Windows\CurrentVersion\Run"
-        app_name = "SwiftSeed"
+        app_name = "AnyTorrent"
         try:
             key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, key_path, 0, winreg.KEY_READ)
             winreg.QueryValueEx(key, app_name)
@@ -132,7 +132,7 @@ class SettingsView(ft.Container):
 
         import winreg
         key_path = r"Software\Microsoft\Windows\CurrentVersion\Run"
-        app_name = "SwiftSeed"
+        app_name = "AnyTorrent"
         
         # Get executable path
         if getattr(sys, 'frozen', False):
@@ -482,7 +482,7 @@ class SettingsView(ft.Container):
                     ft.Icon(ft.Icons.POWER_SETTINGS_NEW),
                     startup_switch
                 ], alignment=ft.MainAxisAlignment.START),
-                ft.Text("Start SwiftSeed automatically when you log in to Windows.", 
+                ft.Text("Start Any Torrent automatically when you log in to Windows.", 
                        size=12, color=ft.Colors.GREY_500),
                 
                 ft.Container(height=10),
@@ -760,8 +760,8 @@ class SettingsView(ft.Container):
         
         # Reset to defaults
         def reset_folders(e):
-            default_download = os.path.join(os.path.expanduser("~"), "Downloads", "SwiftSeed Download")
-            default_temp = os.path.join(tempfile.gettempdir(), "SwiftSeed Download")
+            default_download = os.path.join(os.path.expanduser("~"), "Downloads", "Any Torrent Download")
+            default_temp = os.path.join(tempfile.gettempdir(), "Any Torrent Download")
             
             download_folder_field.value = default_download
             temp_folder_field.value = default_temp
@@ -2050,7 +2050,7 @@ class SettingsView(ft.Container):
                 if is_torrent and is_magnet:
                     status_icon.name = ft.Icons.CHECK_CIRCLE  # type: ignore
                     status_icon.color = ft.Colors.GREEN
-                    status_text.value = "SwiftSeed is the Default Handler"
+                    status_text.value = "Any Torrent is the Default Handler"
                     status_text.color = ft.Colors.GREEN
                 elif is_torrent or is_magnet:
                     status_icon.name = ft.Icons.INFO_OUTLINE  # type: ignore
@@ -2206,7 +2206,7 @@ class SettingsView(ft.Container):
                 content=ft.Column([
                     ft.Text("Troubleshooting", weight=ft.FontWeight.BOLD, size=16),
                     ft.Divider(height=10, color=divider_color),
-                    ft.Text("If setting defaults doesn't work, Windows 10/11 might be blocking the change. You can manually assign SwiftSeed in the Windows Default Apps menu.", size=13, color=text_color),
+                    ft.Text("If setting defaults doesn't work, Windows 10/11 might be blocking the change. You can manually assign Any Torrent in the Windows Default Apps menu.", size=13, color=text_color),
                     ft.Container(height=10),
                     ft.ElevatedButton(
                         "Open Windows Default Apps Settings",
@@ -2222,7 +2222,7 @@ class SettingsView(ft.Container):
         return ft.Container(
             content=ft.ListView([
                 ft.Text("File Associations", size=24, weight=ft.FontWeight.BOLD),
-                ft.Text("Set SwiftSeed as the default handler for torrent files and magnet links", 
+                ft.Text("Set Any Torrent as the default handler for torrent files and magnet links", 
                        size=14, color=text_color),
                 
                 ft.Container(height=10),

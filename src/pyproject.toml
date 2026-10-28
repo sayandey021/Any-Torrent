@@ -1,14 +1,14 @@
 [tool.flet]
-name = "SwiftSeed"
-description = "SwiftSeed Torrent Client"
+name = "AnyTorrent"
+description = "Any Torrent Desktop Client"
 authors = ["Sayan Dey"]
-version = "2.3.1"
+version = "2.3.2"
 
 [tool.flet.windows]
-product-name = "SwiftSeed"
-file-description = "SwiftSeed Torrent Client"
+product-name = "Any Torrent"
+file-description = "Any Torrent Desktop Client"
 company-name = "Sayan Dey"
-copyright = "Copyright (c) 2025 Sayan Dey"
+copyright = "Copyright (c) 2026 Sayan Dey"
 
 [tool.pyright]
 executionEnvironments = [{root = "."}]

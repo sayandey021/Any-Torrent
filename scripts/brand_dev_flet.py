@@ -87,12 +87,12 @@ def brand_flet_exe():
     print(f"\nPatching local dev Flet client: {local_flet_exe} ...")
     
     version_strings = {
-        "ProductName": "SwiftSeed",
-        "FileDescription": "SwiftSeed Torrent Client",
-        "CompanyName": "Sayan Dey",
-        "InternalName": "SwiftSeed",
-        "OriginalFilename": "SwiftSeed.exe",
-        "LegalCopyright": "Copyright (c) 2025 Sayan Dey",
+        "ProductName": "Any Torrent",
+        "FileDescription": "Any Torrent Desktop Client",
+        "CompanyName": "Any Torrent",
+        "InternalName": "AnyTorrent",
+        "OriginalFilename": "AnyTorrent.exe",
+        "LegalCopyright": "Copyright (c) 2025 Any Torrent",
     }
     
     success = True
@@ -110,8 +110,8 @@ def brand_flet_exe():
     
     # 2. Set file and product version
     for ver_flag, ver_val in [
-        ("--set-file-version", "2.1.8.0"),
-        ("--set-product-version", "2.1.8.0"),
+        ("--set-file-version", "2.3.2.0"),
+        ("--set-product-version", "2.3.2.0"),
     ]:
         result = subprocess.run(
             [rcedit, local_flet_exe, ver_flag, ver_val],
@@ -135,7 +135,7 @@ def brand_flet_exe():
             success = False
     
     if success:
-        print(f"\n[OK] Local dev Flet client branded as 'SwiftSeed'!")
+        print(f"\n[OK] Local dev Flet client branded as 'Any Torrent'!")
         print("When you run `python src/main.py`, it will now use this branded client.")
         print("Note: Add .flet_dev_client_v2/ to your .gitignore")
     return success

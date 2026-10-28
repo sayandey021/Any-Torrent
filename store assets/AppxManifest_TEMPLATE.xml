@@ -15,7 +15,7 @@
   <Identity
     Name="Saayan.SwiftSeedDesktop"
     Publisher="CN=37E2AF47-D2FC-489C-BDC1-02C989A7B989"
-    Version="2.3.1.0" />
+    Version="2.3.2.0" />
 
   <Properties>
     <DisplayName>SwiftSeed Desktop</DisplayName>
@@ -35,16 +35,16 @@
   </Resources>
 
   <Applications>
-    <Application Id="SwiftSeed" Executable="SwiftSeed.exe" EntryPoint="Windows.FullTrustApplication">
+    <Application Id="AnyTorrent" Executable="AnyTorrent.exe" EntryPoint="Windows.FullTrustApplication">
       <uap:VisualElements
-        DisplayName="SwiftSeed Desktop"
+        DisplayName="Any Torrent Desktop"
         Description="Fast, secure torrent search and download manager"
         BackgroundColor="transparent"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png">
         
         <!-- Optional: Wide tile logo -->
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" ShortName="SwiftSeed Desktop">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" ShortName="Any Torrent">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo"/>
             <uap:ShowOn Tile="wide310x150Logo"/>

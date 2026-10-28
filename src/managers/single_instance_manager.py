@@ -1,5 +1,5 @@
 """
-Single Instance Manager for SwiftSeed
+Single Instance Manager for Any Torrent
 Ensures only one instance of the application runs at a time
 """
 import os
@@ -12,7 +12,7 @@ import threading
 class SingleInstanceManager:
     """Manages single instance of the application"""
     
-    def __init__(self, app_name="SwiftSeed", port=48213):
+    def __init__(self, app_name="AnyTorrent", port=48213):
         self.app_name = app_name
         self.port = port
         self.socket = None

@@ -10,7 +10,13 @@ class SettingsManager:
     def __init__(self, settings_path: Optional[str] = None):
         if settings_path is None:
             # Use LOCALAPPDATA for Windows (standard app data location)
-            app_dir = os.path.join(os.environ.get('LOCALAPPDATA', os.path.expanduser("~")), "SwiftSeed")
+            local_appdata = os.environ.get('LOCALAPPDATA', os.path.expanduser("~"))
+            new_dir = os.path.join(local_appdata, "AnyTorrent")
+            legacy_dir = os.path.join(local_appdata, "SwiftSeed")
+            if os.path.exists(new_dir) or not os.path.exists(legacy_dir):
+                app_dir = new_dir
+            else:
+                app_dir = legacy_dir
             os.makedirs(app_dir, exist_ok=True)
             settings_path = os.path.join(app_dir, "settings.json")
         

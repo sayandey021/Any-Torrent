@@ -480,8 +480,8 @@ class TorrentSearchApp:
                 self.page.update()
 
             dlg = ft.AlertDialog(
-                title=ft.Text("Rate SwiftSeed"),
-                content=ft.Text("Are you enjoying SwiftSeed? Please take a moment to rate us on the Microsoft Store!"),
+                title=ft.Text("Rate Any Torrent"),
+                content=ft.Text("Are you enjoying Any Torrent? Please take a moment to rate us on the Microsoft Store!"),
                 actions=[
                     ft.TextButton("Rate Now", on_click=on_rate_click),
                     ft.TextButton("Maybe Later", on_click=on_later_click),
@@ -767,11 +767,11 @@ class TorrentSearchApp:
             
             # Setup the icon and menu
             icon = Icon(
-                "SwiftSeed",
+                "Any Torrent",
                 image,
-                "SwiftSeed",
+                "Any Torrent",
                 menu=Menu(
-                    item('Open/Close SwiftSeed', self._toggle_window_taskbar_like, default=True),
+                    item('Open/Close Any Torrent', self._toggle_window_taskbar_like, default=True),
                     item('Exit', quit_app)
                 )
             )
@@ -793,7 +793,7 @@ class TorrentSearchApp:
         
         width = 64
         height = 64
-        # Create a blue icon with white "S" (for SwiftSeed)
+        # Create a blue icon with white "A" (for Any Torrent)
         image = Image.new('RGB', (width, height), color=(41, 98, 255))
         d = ImageDraw.Draw(image)
         # Draw a simple rectangle to make it recognizable
@@ -831,7 +831,7 @@ class TorrentSearchApp:
             def on_yes(e):
                 success, message = file_manager.register_all()
                 if success:
-                    self._show_snack("✓ SwiftSeed is now your default torrent handler!")
+                    self._show_snack("✓ Any Torrent is now your default torrent handler!")
                 else:
                     self._show_snack(f"⚠️ {message}")
                 self.settings_manager.set('file_associations_prompt_shown', True)
@@ -850,11 +850,11 @@ class TorrentSearchApp:
                 self.page.update()
             
             dialog = ft.AlertDialog(
-                title=ft.Text("Set SwiftSeed as Default Torrent Handler?"),
+                title=ft.Text("Set Any Torrent as Default Torrent Handler?"),
                 content=ft.Container(
                     content=ft.Column([
                         ft.Text(
-                            "Would you like to set SwiftSeed as your default application for:",
+                            "Would you like to set Any Torrent as your default application for:",
                             size=14
                         ),
                         ft.Container(height=10),
@@ -873,7 +873,7 @@ class TorrentSearchApp:
                             weight=ft.FontWeight.BOLD
                         ),
                         ft.Text("✓ Double-click .torrent files to open them", size=12),
-                        ft.Text("✓ Click magnet links to open them in SwiftSeed", size=12),
+                        ft.Text("✓ Click magnet links to open them in Any Torrent", size=12),
                         ft.Container(height=5),
                         ft.Text(
                             "You can change this anytime in Settings > File Associations",
@@ -988,7 +988,7 @@ class TorrentSearchApp:
                     title=ft.Row([
                         ft.Row([
                             ft.Icon(ft.Icons.EXIT_TO_APP_ROUNDED, color=ft.Colors.BLUE_400, size=24),
-                            ft.Text("SwiftSeed - Close Options", size=18, weight=ft.FontWeight.W_600)
+                            ft.Text("Any Torrent - Close Options", size=18, weight=ft.FontWeight.W_600)
                         ], spacing=10),
                         ft.IconButton(
                             icon=ft.Icons.CLOSE_ROUNDED,
@@ -999,7 +999,7 @@ class TorrentSearchApp:
                     ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
                     content=ft.Container(
                         content=ft.Column([
-                            ft.Text("How would you like to close SwiftSeed?", size=14, weight=ft.FontWeight.W_500),
+                            ft.Text("How would you like to close Any Torrent?", size=14, weight=ft.FontWeight.W_500),
                             ft.Container(height=5),
                             ft.Text("Choose 'Minimize to Tray' to keep the app running in the background for active downloads, or 'Exit' to completely shut down and save state.", 
                                     size=12, color=ft.Colors.GREY_400),
@@ -1016,7 +1016,7 @@ class TorrentSearchApp:
                                 on_click=lambda _: self._minimize_to_tray(),
                             ),
                             ft.ElevatedButton(
-                                "Exit SwiftSeed",
+                                "Exit Any Torrent",
                                 icon=ft.Icons.POWER_SETTINGS_NEW_ROUNDED,
                                 bgcolor=ft.Colors.RED_700,
                                 color=ft.Colors.WHITE,
@@ -1285,13 +1285,13 @@ class TorrentSearchApp:
             fit=ft.BoxFit.CONTAIN,
         )
         self.title_bar_title_text = ft.Text(
-            "SwiftSeed",
+            "Any Torrent",
             size=12,
             weight=ft.FontWeight.W_600,
             font_family="Segoe UI, -apple-system, sans-serif",
         )
         self.title_bar_version_text = ft.Text(
-            "v2.3.1",
+            "v2.3.2",
             size=10,
             weight=ft.FontWeight.W_500,
         )
@@ -1805,7 +1805,9 @@ class TorrentSearchApp:
     def _open_changelog_dialog(self, e):
         inner_content = ft.Container(
             content=ft.Column([
-            ft.Text("v2.3.0", weight=ft.FontWeight.BOLD, size=16),
+                ft.Text("v2.3.1", weight=ft.FontWeight.BOLD, size=16),
+                ft.Text("• Custom frameless title bar with native Windows controls and hover animations.\n• Brand & icon overhaul with high-res multi-size ICOs and document icons.\n• Smart clipboard support: auto-fill magnet links & one-click paste buttons.\n• Fixed Light Mode UI contrast, link colors, and tab highlights.\n", size=13),
+                ft.Text("v2.3.0", weight=ft.FontWeight.BOLD, size=16),
             ft.Text("• Upgraded core BitTorrent engine to libtorrent 2.1.1 for faster peer discovery and transfer.\n• Optimized app package size by ~35% (~110 MB reduction).\n• Updated Flet UI framework to 0.86.5 with polished tab highlights.\n• Full Python 3.10–3.13 baseline with dynamic Windows DLL preloading.\n• High-resolution app branding and multi-size Windows icon refresh.\n• Enhanced Windows integration with SOCKS proxy and COM drag-and-drop support.\n", size=13),
             ft.Text("v2.2.0", weight=ft.FontWeight.BOLD, size=16),
             ft.Text("  Impliment drag & drop natively.\n  Polished and improved some UI elements.\n  Known bug fixed.\n", size=13),  
@@ -1870,7 +1872,7 @@ class TorrentSearchApp:
         header = ft.Column([
             ft.Row(
                 [
-                    ft.Text("About SwiftSeed", size=30, weight=ft.FontWeight.BOLD),
+                    ft.Text("About Any Torrent", size=30, weight=ft.FontWeight.BOLD),
                     ft.Container(expand=True),
                     ft.IconButton(
                         icon=ft.Icons.HISTORY,
@@ -1896,8 +1898,8 @@ class TorrentSearchApp:
                     fit=ft.BoxFit.CONTAIN,
                 ),
                 ft.Container(height=10),
-                ft.Text("SwiftSeed", size=40, weight=ft.FontWeight.BOLD, color="primary"),
-                ft.Text("Version 2.3.1", size=20, weight=ft.FontWeight.W_500),
+                ft.Text("Any Torrent", size=40, weight=ft.FontWeight.BOLD, color="primary"),
+                ft.Text("Version 2.3.2", size=20, weight=ft.FontWeight.W_500),
                 ft.Container(height=20),
                 ft.Text("Developed by Sayan Dey", size=18),
                 ft.Text("Icon Art by Sayan Paul", size=15),
@@ -1953,7 +1955,7 @@ class TorrentSearchApp:
                 
                 # Buy Me a Coffee
                 ft.Text(
-                    "Building free software takes time and passion.\nIf SwiftSeed has helped you, please consider supporting its development.\nEvery coffee counts! ☕❤️", 
+                    "Building free software takes time and passion.\nIf Any Torrent has helped you, please consider supporting its development.\nEvery coffee counts! ☕❤️", 
                     size=16, 
                     text_align=ft.TextAlign.CENTER,
                     italic=True
@@ -1983,9 +1985,10 @@ class TorrentSearchApp:
     # --- SEARCH VIEW ---
     def _build_search_view(self):
         self.search_field = ft.TextField(
-            hint_text="Search for movies, games, software...",
+            hint_text="Search torrents or paste magnet link / hash...",
             expand=True,
             on_submit=self._perform_search,
+            on_change=self._on_search_field_change,
             border_radius=10,
             prefix_icon=ft.Icons.SEARCH,
             text_align=ft.TextAlign.LEFT,
@@ -1993,13 +1996,21 @@ class TorrentSearchApp:
             content_padding=ft.Padding.only(left=20, top=13, right=0, bottom=25),
             height=50,
             suffix=ft.Container(
-                content=ft.IconButton(
-                    icon=ft.Icons.CLEAR,
-                    tooltip="Clear search",
-                    icon_size=18,
-                    on_click=lambda e: self._clear_search_field(e)
-                ),
-                padding=ft.Padding.only(left=0, top=0, right=15, bottom=0)
+                content=ft.Row([
+                    ft.IconButton(
+                        icon=ft.Icons.PASTE,
+                        tooltip="Paste from clipboard",
+                        icon_size=18,
+                        on_click=lambda e: self._paste_search_field(e)
+                    ),
+                    ft.IconButton(
+                        icon=ft.Icons.CLEAR,
+                        tooltip="Clear search",
+                        icon_size=18,
+                        on_click=lambda e: self._clear_search_field(e)
+                    ),
+                ], tight=True, spacing=0),
+                padding=ft.Padding.only(left=0, top=0, right=10, bottom=0)
             )
         )
         
@@ -2519,7 +2530,7 @@ class TorrentSearchApp:
 
         return ft.Column(
             [
-                ft.Text("SwiftSeed", size=30, weight=ft.FontWeight.BOLD),
+                ft.Text("Any Torrent", size=30, weight=ft.FontWeight.BOLD),
                 ft.Row(
                     [self.search_field, self.search_btn],
                     alignment=ft.MainAxisAlignment.START,
@@ -3029,6 +3040,57 @@ class TorrentSearchApp:
         except:
             return 0
 
+    def _is_magnet_query(self, text: str) -> bool:
+        if not text:
+            return False
+        t = text.strip()
+        if t.lower().startswith("magnet:"):
+            return True
+        import re
+        if re.fullmatch(r'[0-9a-fA-F]{40}', t) or re.fullmatch(r'[2-7a-zA-Z]{32}', t):
+            return True
+        return False
+
+    def _format_magnet_uri(self, text: str) -> str:
+        t = text.strip()
+        if t.lower().startswith("magnet:"):
+            return t
+        import re
+        if re.fullmatch(r'[0-9a-fA-F]{40}', t) or re.fullmatch(r'[2-7a-zA-Z]{32}', t):
+            return f"magnet:?xt=urn:btih:{t}"
+        return t
+
+    def _on_search_field_change(self, e):
+        val = (self.search_field.value or "").strip()
+        if self._is_magnet_query(val):
+            if val.lower().startswith("magnet:?xt=") or (val.lower().startswith("magnet:") and len(val) >= 20) or (not val.lower().startswith("magnet:") and len(val) in (32, 40)):
+                magnet_uri = self._format_magnet_uri(val)
+                self.search_field.value = ""
+                self.search_field.update()
+                self._open_magnet_link(magnet_uri)
+
+    def _paste_search_field(self, e):
+        try:
+            import win32clipboard, win32con
+            win32clipboard.OpenClipboard()
+            try:
+                if win32clipboard.IsClipboardFormatAvailable(win32con.CF_UNICODETEXT):
+                    text = win32clipboard.GetClipboardData(win32con.CF_UNICODETEXT) or ""
+                    if text:
+                        clean_text = text.strip()
+                        if self._is_magnet_query(clean_text):
+                            magnet_uri = self._format_magnet_uri(clean_text)
+                            self.search_field.value = ""
+                            self.search_field.update()
+                            self._open_magnet_link(magnet_uri)
+                            return
+                        self.search_field.value = clean_text
+                        self.search_field.update()
+            finally:
+                win32clipboard.CloseClipboard()
+        except Exception as ex:
+            print(f"Paste failed: {ex}")
+
     def _clear_search_field(self, e):
         self.search_field.value = ""
         self.search_field.update()
@@ -3095,8 +3157,15 @@ class TorrentSearchApp:
 
     def _perform_search(self, e, append=False):
         print(f"DEBUG: _perform_search called. query={self.search_field.value}, append={append}")
-        query = self.search_field.value
+        query = (self.search_field.value or "").strip()
         if not query:
+            return
+
+        if self._is_magnet_query(query):
+            magnet_uri = self._format_magnet_uri(query)
+            self.search_field.value = ""
+            self.search_field.update()
+            self._open_magnet_link(magnet_uri)
             return
 
         category_name = self.category_dropdown.value
@@ -4295,7 +4364,7 @@ class TorrentSearchApp:
             return self._create_torrent_card(torrent)
 
     def _show_snack(self, message, is_error=False):
-        """Standard snackbar implementation for SwiftSeed"""
+        """Standard snackbar implementation for Any Torrent"""
         try:
             print(f"DEBUG _show_snack: {message}")
             snack = ft.SnackBar(
@@ -5882,13 +5951,13 @@ def main(page: ft.Page):
     page.update()
 
     # Set Windows App User Model ID for proper taskbar branding
-    # This ensures Windows shows "SwiftSeed" in the taskbar jump list instead of "Flet"
+    # This ensures Windows shows "Any Torrent" in the taskbar jump list instead of "Flet"
     if sys.platform == 'win32' and getattr(sys, 'frozen', False):
         try:
             import ctypes
-            # Set the App User Model ID to a unique identifier for SwiftSeed
+            # Set the App User Model ID to a unique identifier for Any Torrent
             # Format: CompanyName.ProductName.SubProduct.VersionInformation
-            app_id = 'SayanDey.SwiftSeed.TorrentClient.v5'
+            app_id = 'SayanDey.AnyTorrent.TorrentClient.v5'
             ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(app_id)
             print(f"Windows App User Model ID set to: {app_id}")
             
@@ -6061,7 +6130,7 @@ if __name__ == "__main__":
         if not is_msix:
             try:
                 import ctypes
-                app_id = 'SayanDey.SwiftSeed.TorrentClient.v5'
+                app_id = 'SayanDey.AnyTorrent.TorrentClient.v5'
                 ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(app_id)
                 print(f"[Pre-Init] Windows App User Model ID set to: {app_id}")
             except Exception as e:
@@ -6073,7 +6142,7 @@ if __name__ == "__main__":
     try:
         from managers.single_instance_manager import SingleInstanceManager
         
-        instance_manager = SingleInstanceManager("SwiftSeed", 48213)
+        instance_manager = SingleInstanceManager("AnyTorrent", 48213)
         
         # Check if we're the primary instance
         is_primary = instance_manager.check_and_acquire()
@@ -6147,7 +6216,7 @@ if __name__ == "__main__":
         ft.app(  # type: ignore
             target=main, 
             assets_dir=resource_path("assets"),
-            name="SwiftSeed",
+            name="AnyTorrent",
             view=ft.AppView.FLET_APP_HIDDEN
         )
     finally:

@@ -1,4 +1,35 @@
-# Release Notes
+# Changelog
+
+All notable changes to Any Torrent Desktop will be documented in this file.
+
+## Version 2.3.1
+
+### 🏷️ Rebranding to Any Torrent
+- **Application Renamed to Any Torrent**: Fully rebranded the client to **Any Torrent** (`AnyTorrent.exe`) across window titlebar, System Tray, Windows App UserModelID (`SayanDey.AnyTorrent.TorrentClient.v5`), Inno Setup installer, MSIX packaging manifests, settings, and build systems.
+- **Seamless Data Continuity**: Implemented backward-compatible directory migration so existing downloads (`SwiftSeed Download` / `Any Torrent Download`), settings (`LOCALAPPDATA/AnyTorrent`), and database files (`~/.anytorrent`) automatically transition without losing history, bookmarks, or active torrent states.
+
+### 🎨 Custom Frameless Title Bar
+- **Windows Native-Style Title Bar**: Replaced default OS window frame with a sleek, frameless custom title bar featuring integrated window dragging (`ft.WindowDragArea`), application icon, title, and Windows-style action controls (Minimize, Maximize/Restore, and Close).
+- **Interactive Micro-Animations**: Smooth hover transitions across window controls, including `#E81123` highlight on Close and theme-adaptive hover states for Minimize and Maximize.
+- **Dynamic Theme Synchronization**: Automatically adapts foreground and background colors in real time across Dark, Light, and Glassmorphism themes, with reactive maximize/restore icon toggling.
+
+### 🖼️ Brand Overhaul & High-Resolution Assets
+- **New App Branding (Artwork by Sayan Paul)**: Complete visual brand refresh across the title bar, system tray, About view, Windows Store assets, and executable metadata.
+- **Multi-Resolution Windows ICOs**: Re-engineered `icon.ico` and `file.ico` packaging 7 embedded resolution frames (`16×16`, `24×24`, `32×32`, `48×48`, `64×64`, `128×128`, and `256×256`) with Lanczos resampling, eliminating blurry scaling artifacts in Windows Explorer, Taskbar, and Alt+Tab.
+- **Aspect-Preserved `.torrent` Document Icon**: Fitted the updated `.torrent` document icon onto a transparent square frame to preserve natural document aspect ratio without horizontal stretching in Windows Explorer.
+- **Full Store & MSIX Asset Synchronization**: Regenerated all 30 MSIX app and file association tiles (`StoreLogo`, `Square150x150Logo`, `Square44x44Logo`, `SplashScreen`, and `FileLogo` plated & unplated variants).
+- **Automated Asset Mirroring**: Enhanced `scripts/build_exe.py`, `scripts/copy_icons.py`, and `scripts/regenerate_file_icons.py` to seamlessly mirror assets between `icon/`, `src/assets/`, and distribution bundles.
+
+### 📋 Smart Clipboard & Magnet Search Support
+- **Search Bar Magnet Link & Hash Detection**: Pasting or submitting a `magnet:` link or 32/40-character info-hash directly into the main search bar now instantly navigates to the Downloads view and triggers the torrent metadata fetch & download dialog.
+- **Clipboard History (<kbd>Win</kbd>+<kbd>V</kbd>) Support Workaround**: Overcame upstream Flutter Desktop engine paste dropping by introducing instant one-click **Paste** buttons in both the Add Magnet Link dialog and the main Search bar.
+- **Automatic Magnet Link Pre-Fill**: Opening the "Add Magnet Link" dialog now automatically detects if a valid `magnet:` URI is present in the Windows clipboard and pre-populates the input field.
+
+### 🌓 Theme Polish & Bug Fixes
+- **Light Theme Contrast & Link Color Corrections**: Fixed unreadable link colors, contrast issues, and tab highlights when running in Light Mode.
+- **About Page Updates**: Displayed updated version `v2.3.1` and added contributor credit for icon art.
+
+---
 
 ## Version 2.3.0
 
@@ -16,12 +47,6 @@
   - Integrated and pinned `pywin32>=305` and `comtypes>=1.2.0` for native Windows Jump List, tray management, single-instance messaging, and native drag-and-drop.
   - Added `PySocks>=1.7.1` for reliable SOCKS4/SOCKS5 proxy support in provider networking.
   - Synchronized and cleaned `requirements.txt` and `setup.py` with verified production version constraints.
-- **Brand & Icon Asset Overhaul**:
-  - **New High-Resolution App Branding**: Upgraded primary application icon from high-res source (`icon/icon.png`) across the window titlebar, system tray, About screen, and executable metadata.
-  - **Multi-Resolution Windows ICOs**: Re-engineered `icon.ico` and `file.ico` to package 7 distinct resolution frames (`16×16`, `24×24`, `32×32`, `48×48`, `64×64`, `128×128`, and `256×256`) with Lanczos resampling, eliminating blurry scaling artifacts in Windows Explorer, the Taskbar, and Alt+Tab switchers.
-  - **Aspect-Preserved `.torrent` File Icon**: Fitted the updated `.torrent` document icon (`file.png`) onto a square transparent frame, ensuring natural vertical document proportions without horizontal stretching in Windows Explorer.
-  - **MSIX & Windows Store Asset Synchronization**: Regenerated all 30 MSIX app and file association tiles (`StoreLogo`, `Square150x150Logo`, `Square44x44Logo`, `SplashScreen`, and `FileLogo` plated & unplated variants) using `create_msix_assets.py`.
-  - **Build Pipeline Icon Automation**: Enhanced `scripts/build_exe.py`, `scripts/copy_icons.py`, and `scripts/regenerate_file_icons.py` to automatically mirror and maintain icon assets between `icon/`, `src/assets/`, and distribution bundles.
 
 ---
 

@@ -16,7 +16,7 @@ def build_portable():
 def build_installer():
     print("\n--- Building Windows Installer ---")
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    exe_path = os.path.join(base_dir, "dist", "SwiftSeed", "SwiftSeed.exe")
+    exe_path = os.path.join(base_dir, "dist", "AnyTorrent", "AnyTorrent.exe")
     if not os.path.exists(exe_path):
         print(f"Error: Portable build not found at {exe_path}. Build portable first.")
         sys.exit(1)
@@ -43,7 +43,7 @@ def build_installer():
 def build_msix():
     print("\n--- Building MSIX Package ---")
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    exe_path = os.path.join(base_dir, "dist", "SwiftSeed", "SwiftSeed.exe")
+    exe_path = os.path.join(base_dir, "dist", "AnyTorrent", "AnyTorrent.exe")
     if not os.path.exists(exe_path):
         print(f"Error: Portable build not found at {exe_path}. Build portable first.")
         sys.exit(1)
@@ -77,7 +77,7 @@ def build_msix():
     os.makedirs(pkg_assets)
     
     print("Copying application files...")
-    subprocess.run(["xcopy", "/E", "/I", "/Y", "/Q", os.path.join(base_dir, "dist", "SwiftSeed", "*"), os.path.join(pkg_root, "")])
+    subprocess.run(["xcopy", "/E", "/I", "/Y", "/Q", os.path.join(base_dir, "dist", "AnyTorrent", "*"), os.path.join(pkg_root, "")])
     
     manifest_src = os.path.join(base_dir, "store assets", "AppxManifest_TEMPLATE.xml")
     if os.path.exists(manifest_src):
@@ -104,13 +104,13 @@ def build_msix():
     
     subprocess.run([sys.executable, py_script, "--icon", icon_path, "--file-icon", file_icon_path, "--outdir", pkg_assets])
     
-    # Patch flet.exe copies with SwiftSeed branding before packing
+    # Patch flet.exe copies with Any Torrent branding before packing
     print("Patching Flet executables in MSIX package...")
     patch_msix_flet_exes(pkg_root)
     
     out_dir = os.path.join(base_dir, "installer")
     os.makedirs(out_dir, exist_ok=True)
-    out_msix = os.path.join(out_dir, "SwiftSeed.msix")
+    out_msix = os.path.join(out_dir, "AnyTorrent.msix")
     
     print("Generating Package Resource Index (resources.pri)...")
     priconfig_path = os.path.join(base_dir, "priconfig.xml")
@@ -134,7 +134,7 @@ def build_msix():
 
 
 def patch_msix_flet_exes(pkg_root):
-    """Patch all flet.exe copies inside the MSIX package root with SwiftSeed branding."""
+    """Patch all flet.exe copies inside the MSIX package root with Any Torrent branding."""
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     rcedit_path = os.path.join(base_dir, "scripts", "rcedit.exe")
     icon_path = os.path.join(base_dir, "src", "assets", "icon.ico")
@@ -160,12 +160,12 @@ def patch_msix_flet_exes(pkg_root):
     print(f"\nPatching {len(flet_exes)} Flet executable(s) in MSIX package...")
 
     version_strings = {
-        "ProductName": "SwiftSeed",
-        "FileDescription": "SwiftSeed Torrent Client",
-        "CompanyName": "Sayan Dey",
-        "InternalName": "SwiftSeed",
-        "OriginalFilename": "SwiftSeed.exe",
-        "LegalCopyright": "Copyright (c) 2025 Sayan Dey",
+        "ProductName": "Any Torrent",
+        "FileDescription": "Any Torrent Desktop Client",
+        "CompanyName": "Any Torrent",
+        "InternalName": "AnyTorrent",
+        "OriginalFilename": "AnyTorrent.exe",
+        "LegalCopyright": "Copyright (c) 2025 Any Torrent",
     }
 
     for flet_exe in flet_exes:
@@ -174,9 +174,9 @@ def patch_msix_flet_exes(pkg_root):
         subprocess.run([rcedit_path, flet_exe, "--set-icon", icon_path],
                        capture_output=True, text=True)
         # Versions
-        subprocess.run([rcedit_path, flet_exe, "--set-file-version", "2.3.1.0"],
+        subprocess.run([rcedit_path, flet_exe, "--set-file-version", "2.3.2.0"],
                        capture_output=True, text=True)
-        subprocess.run([rcedit_path, flet_exe, "--set-product-version", "2.3.1.0"],
+        subprocess.run([rcedit_path, flet_exe, "--set-product-version", "2.3.2.0"],
                        capture_output=True, text=True)
         # String fields
         for key, val in version_strings.items():
@@ -187,7 +187,7 @@ def patch_msix_flet_exes(pkg_root):
 def interactive_menu():
     while True:
         print("\n" + "="*60)
-        print("                    SwiftSeed Build System")
+        print("                   Any Torrent Build System")
         print("="*60)
         print("\nSelect build operation:\n")
         print("  [1] Build Portable Version Only")
@@ -281,7 +281,7 @@ def interactive_menu():
             print("Invalid choice.")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="SwiftSeed Build System")
+    parser = argparse.ArgumentParser(description="Any Torrent Build System")
     parser.add_argument("--portable", action="store_true", help="Build portable version")
     parser.add_argument("--installer", action="store_true", help="Build installer")
     parser.add_argument("--all", action="store_true", help="Build everything")

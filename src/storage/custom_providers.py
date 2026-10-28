@@ -12,7 +12,12 @@ class CustomProviderManager:
         if db_path is None:
             # Use user's home directory
             home = os.path.expanduser("~")
-            app_dir = os.path.join(home, ".swiftseed")
+            new_dir = os.path.join(home, ".anytorrent")
+            legacy_dir = os.path.join(home, ".swiftseed")
+            if os.path.exists(new_dir) or not os.path.exists(legacy_dir):
+                app_dir = new_dir
+            else:
+                app_dir = legacy_dir
             os.makedirs(app_dir, exist_ok=True)
             db_path = os.path.join(app_dir, "providers.db")
         

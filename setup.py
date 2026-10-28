@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="SwiftSeed",
-    version="2.3.1",
+    name="AnyTorrent",
+    version="2.3.2",
     description="A modern, standalone torrent search and download application",
     author="Sayan Dey",
     packages=find_packages(where="src"),
@@ -21,7 +21,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "swiftseed=main:main",
+            "anytorrent=main:main",
         ],
     },
     python_requires=">=3.10",

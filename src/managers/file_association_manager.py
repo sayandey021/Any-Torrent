@@ -1,5 +1,5 @@
 """
-File Association Manager for SwiftSeed
+File Association Manager for Any Torrent
 Handles registration of .torrent and magnet: protocol handlers on Windows
 """
 import os
@@ -10,15 +10,15 @@ from pathlib import Path
 
 
 class FileAssociationManager:
-    """Manages file and protocol associations for SwiftSeed"""
+    """Manages file and protocol associations for Any Torrent"""
     
-    def __init__(self, app_name="SwiftSeed", app_description="SwiftSeed Torrent Client"):
+    def __init__(self, app_name="Any Torrent", app_description="Any Torrent Client"):
         self.app_name = app_name
         self.app_description = app_description
         self.exe_path = self._get_exe_path()
         
     def _get_exe_path(self):
-        """Get the path to the SwiftSeed executable"""
+        """Get the path to the Any Torrent executable"""
         if getattr(sys, 'frozen', False):
             # Running as compiled executable
             return sys.executable
@@ -31,7 +31,7 @@ class FileAssociationManager:
         return self.exe_path is not None
     
     def is_torrent_handler(self):
-        """Check if SwiftSeed is registered as .torrent handler"""
+        """Check if Any Torrent is registered as .torrent handler"""
         if not self.is_running_as_executable():
             return False
             
@@ -43,7 +43,7 @@ class FileAssociationManager:
                                      0, winreg.KEY_READ)
                 prog_id, _ = winreg.QueryValueEx(key2, "ProgId")
                 winreg.CloseKey(key2)
-                if prog_id and prog_id != "SwiftSeed.TorrentFile":
+                if prog_id and prog_id not in ("AnyTorrent.TorrentFile", "SwiftSeed.TorrentFile"):
                     return False
             except Exception:
                 pass
@@ -53,7 +53,7 @@ class FileAssociationManager:
             winreg.CloseKey(key)
             
             # Check if it points to our app
-            if value == "SwiftSeed.TorrentFile":
+            if value in ("AnyTorrent.TorrentFile", "SwiftSeed.TorrentFile"):
                 return True
                 
             return False
@@ -64,7 +64,7 @@ class FileAssociationManager:
             return False
     
     def is_magnet_handler(self):
-        """Check if SwiftSeed is registered as magnet: protocol handler"""
+        """Check if Any Torrent is registered as magnet: protocol handler"""
         if not self.is_running_as_executable():
             return False
             
@@ -103,7 +103,7 @@ class FileAssociationManager:
             return False
     
     def register_torrent_handler(self):
-        """Register SwiftSeed as .torrent file handler"""
+        """Register Any Torrent as .torrent file handler"""
         if not self.is_running_as_executable():
             return False, "Can only register when running as executable"
             
@@ -115,7 +115,7 @@ class FileAssociationManager:
                 pass
 
             # Create ProgID for .torrent files
-            prog_id_key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, r"Software\Classes\SwiftSeed.TorrentFile")
+            prog_id_key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, r"Software\Classes\AnyTorrent.TorrentFile")
             winreg.SetValue(prog_id_key, "", winreg.REG_SZ, "Torrent File")
             winreg.SetValueEx(prog_id_key, "FriendlyTypeName", 0, winreg.REG_SZ, "Torrent File")
             winreg.CloseKey(prog_id_key)
@@ -139,23 +139,23 @@ class FileAssociationManager:
             except Exception:
                 pass
                 
-            icon_key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, r"Software\Classes\SwiftSeed.TorrentFile\DefaultIcon")
+            icon_key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, r"Software\Classes\AnyTorrent.TorrentFile\DefaultIcon")
             winreg.SetValue(icon_key, "", winreg.REG_SZ, icon_path)
             winreg.CloseKey(icon_key)
             
             # Set command to open
-            command_key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, r"Software\Classes\SwiftSeed.TorrentFile\shell\open\command")
+            command_key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, r"Software\Classes\AnyTorrent.TorrentFile\shell\open\command")
             winreg.SetValue(command_key, "", winreg.REG_SZ, f'"{self.exe_path}" "%1"')
             winreg.CloseKey(command_key)
             
             # Associate .torrent extension
             ext_key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, r"Software\Classes\.torrent")
-            winreg.SetValue(ext_key, "", winreg.REG_SZ, "SwiftSeed.TorrentFile")
+            winreg.SetValue(ext_key, "", winreg.REG_SZ, "AnyTorrent.TorrentFile")
             winreg.CloseKey(ext_key)
             
             if not self.is_torrent_handler():
                 self.open_windows_default_apps()
-                return True, "Opened Windows Settings. Please select SwiftSeed."
+                return True, "Opened Windows Settings. Please select Any Torrent."
             
             print("[OK] Registered .torrent file handler")
             return True, "Successfully registered .torrent handler"
@@ -165,7 +165,7 @@ class FileAssociationManager:
             return False, error_msg
     
     def register_magnet_handler(self):
-        """Register SwiftSeed as magnet: protocol handler"""
+        """Register Any Torrent as magnet: protocol handler"""
         if not self.is_running_as_executable():
             return False, "Can only register when running as executable"
             
@@ -194,7 +194,7 @@ class FileAssociationManager:
             
             if not self.is_magnet_handler():
                 self.open_windows_default_apps()
-                return True, "Opened Windows Settings. Please select SwiftSeed."
+                return True, "Opened Windows Settings. Please select Any Torrent."
             
             print("[OK] Registered magnet: protocol handler")
             return True, "Successfully registered magnet: handler"
@@ -225,6 +225,10 @@ class FileAssociationManager:
                 pass
             
             # Remove ProgID
+            try:
+                self._delete_key_recursive(winreg.HKEY_CURRENT_USER, r"Software\Classes\AnyTorrent.TorrentFile")
+            except FileNotFoundError:
+                pass
             try:
                 self._delete_key_recursive(winreg.HKEY_CURRENT_USER, r"Software\Classes\SwiftSeed.TorrentFile")
             except FileNotFoundError:

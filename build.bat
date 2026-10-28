@@ -1,6 +1,6 @@
 @echo off
 cd /d "%~dp0"
-title SwiftSeed Build System
+title Any Torrent Build System
 color 0A
 
 echo Checking dependencies...

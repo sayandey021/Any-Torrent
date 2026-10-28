@@ -162,8 +162,8 @@ def post_build_copy_dlls():
     runtime DLLs. On fresh Windows installs these may not be present, so we
     must co-locate them with the .pyd file.
     """
-    dist_lt_dir = os.path.join(base_dir, 'dist', 'SwiftSeed', '_internal', 'libtorrent')
-    dist_internal = os.path.join(base_dir, 'dist', 'SwiftSeed', '_internal')
+    dist_lt_dir = os.path.join(base_dir, 'dist', 'AnyTorrent', '_internal', 'libtorrent')
+    dist_internal = os.path.join(base_dir, 'dist', 'AnyTorrent', '_internal')
     
     if not os.path.exists(dist_lt_dir):
         os.makedirs(dist_lt_dir, exist_ok=True)
@@ -282,7 +282,7 @@ def post_build_copy_dlls():
 def post_build_cleanup():
     """Remove unused heavy binaries, debug artifacts, and accidental duplicates to minimize app size."""
     print("\nRunning post-build size minimization cleanup...")
-    dist_root = os.path.join(base_dir, 'dist', 'SwiftSeed')
+    dist_root = os.path.join(base_dir, 'dist', 'AnyTorrent')
     internal_dir = os.path.join(dist_root, '_internal')
 
     # 1. Remove accidental nested _internal/_internal directory
@@ -336,7 +336,7 @@ def patch_executable_icons():
         print(f"rcedit.exe not found at {rcedit_path}, skipping patch.")
         return
 
-    dist_dir = os.path.join(base_dir, "dist", "SwiftSeed")
+    dist_dir = os.path.join(base_dir, "dist", "AnyTorrent")
 
     # Collect ALL flet.exe / fletd.exe files from both locations
     flet_exes = []
@@ -356,12 +356,12 @@ def patch_executable_icons():
     import subprocess
 
     version_strings = {
-        "ProductName": "SwiftSeed",
-        "FileDescription": "SwiftSeed Torrent Client",
+        "ProductName": "Any Torrent",
+        "FileDescription": "Any Torrent Desktop Client",
         "CompanyName": "Sayan Dey",
-        "InternalName": "SwiftSeed",
-        "OriginalFilename": "SwiftSeed.exe",
-        "LegalCopyright": "Copyright (c) 2025 Sayan Dey",
+        "InternalName": "AnyTorrent",
+        "OriginalFilename": "AnyTorrent.exe",
+        "LegalCopyright": "Copyright (c) 2026 Sayan Dey",
     }
 
     for flet_exe in flet_exes:
@@ -379,8 +379,8 @@ def patch_executable_icons():
 
         # 2. Set file and product version
         for ver_flag, ver_val in [
-            ("--set-file-version", "2.1.8.0"),
-            ("--set-product-version", "2.1.8.0"),
+            ("--set-file-version", "2.3.2.0"),
+            ("--set-product-version", "2.3.2.0"),
         ]:
             result = subprocess.run(
                 [rcedit_path, flet_exe, ver_flag, ver_val],
@@ -414,6 +414,7 @@ def build_exe():
     import time
     print("Terminating any running instances to release file locks...")
     processes_to_kill = [
+        "AnyTorrent.exe",
         "SwiftSeed.exe",
         "SwiftSeedApp.exe",
         "SwiftSeedAppD.exe",
@@ -535,7 +536,7 @@ def build_exe():
     
     PyInstaller.__main__.run([
         main_file,
-        '--name=SwiftSeed',
+        '--name=AnyTorrent',
         '--onedir',  # Directory structure (better for installers and Flet)
         '--noconsole',  # Hide console window for production
         '--clean',
@@ -580,12 +581,12 @@ def build_exe():
     
     print("\n" + "="*60)
     print("Build complete!")
-    print(f"Executable location: {os.path.join(base_dir, 'dist', 'SwiftSeed', 'SwiftSeed.exe')}")
+    print(f"Executable location: {os.path.join(base_dir, 'dist', 'AnyTorrent', 'AnyTorrent.exe')}")
     print("="*60)
 
 
 if __name__ == "__main__":
-    print("Building SwiftSeed executable...")
+    print("Building Any Torrent executable...")
     print("This may take a few minutes...\n")
     build_exe()
 

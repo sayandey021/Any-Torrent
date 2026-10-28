@@ -78,7 +78,8 @@ def main():
     locations = []
     
     # Check dist
-    dist_pyd = os.path.join(os.path.dirname(__file__), '..', 'dist', 'SwiftSeed', 
+    app_folder = 'AnyTorrent' if os.path.exists(os.path.join(os.path.dirname(__file__), '..', 'dist', 'AnyTorrent')) else 'SwiftSeed'
+    dist_pyd = os.path.join(os.path.dirname(__file__), '..', 'dist', app_folder, 
                             '_internal', 'libtorrent', '__init__.cp313-win_amd64.pyd')
     if os.path.exists(dist_pyd):
         locations.append(('dist', os.path.abspath(dist_pyd)))
